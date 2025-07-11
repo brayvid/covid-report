@@ -80,3 +80,12 @@ function getCsvValuesFromLine(line) {
         });
     return values;
 }
+
+
+// This code will run once the entire page (DOM) is ready.
+// It's the standard way to start executing jQuery-dependent code.
+$(document).ready(function() {
+    // This is the function call that was previously in your HTML.
+    // It will now fetch and display your data.
+    getDataCSV(); 
+});

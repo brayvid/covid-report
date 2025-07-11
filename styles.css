@@ -1,0 +1,99 @@
+body {
+    display: flex;             /* MUST HAVE */
+    flex-direction: column;    /* MUST HAVE */
+    min-height: 100vh;         /* MUST HAVE: Body must also be able to fill viewport height */
+    margin: 0;                 /* Ensure no body margin */
+
+    /* Desktop padding-top based on .navbar padding (10*2) + .navbar a padding (14*2) + font (~18) = ~66-68px */
+    padding-top: 68px;
+    padding-bottom: 20px;      /* ADDED: This creates the 20px space below where the footer will sit */
+    background-color: rgb(164, 211, 164);
+}
+
+/* --- WITH these new rules: --- */
+html {
+    box-sizing: border-box; /* 1 */
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit; /* 2 */
+}
+
+#area {
+    width: 20em;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    max-width: 90%; /* Added for better responsiveness on small screens */
+}
+
+#box{
+    width: 100%;       
+    top: 50%;                       
+}
+
+#tbl{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    width: 100%; /* Make table take full width of its container */
+    border-collapse: collapse; /* Optional: for cleaner borders */
+}
+
+h1#header, #footer, #range { /* Use h1 for the header for better semantics */
+    text-align: center;
+}
+
+#range, footer {
+    font-size: large;
+    font-weight: 500;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+h1#header, #tbl {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: x-large;
+}
+
+table th, table td {
+    padding: 8px; /* Increased padding slightly for readability */
+}
+
+footer {
+    color: #000000;
+}
+
+a:link {
+    color: black;
+}
+
+footer {
+    /* REMOVE position:absolute; and bottom: styles if they were present */
+    margin-top: auto;         /* KEY: Pushes footer to the bottom of available space in body */
+    flex-shrink: 0;           /* ADDED: Prevents footer from shrinking */
+    padding: 2em 0;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto;
+    /* Remove padding from here to avoid double padding */
+}
+
+/* Added for accessibility on table in optimized HTML */
+#tbl caption {
+    font-size: large;
+    font-weight: 500;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    padding-bottom: 10px;
+    caption-side: bottom; /* Places caption below table */
+}

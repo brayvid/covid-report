@@ -1,169 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!--
+    ================================================================================
+    PRIMARY META TAGS: Essential for SEO and basic browser functions.
+    ================================================================================
+    -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Covid Report NYC</title>
-    <style>
 
-        body {
-            display: flex;             /* MUST HAVE */
-            flex-direction: column;    /* MUST HAVE */
-            min-height: 100vh;         /* MUST HAVE: Body must also be able to fill viewport height */
-            margin: 0;                 /* Ensure no body margin */
+    <!-- CHANGED: A more descriptive and keyword-rich title for better SERP visibility. -->
+    <title>NYC Covid Report | Blake Rayvid</title>
 
-            /* Desktop padding-top based on .navbar padding (10*2) + .navbar a padding (14*2) + font (~18) = ~66-68px */
-            padding-top: 68px;
-            padding-bottom: 20px;      /* ADDED: This creates the 20px space below where the footer will sit */
-            }
+    <!-- ADDED: SEO - A concise description of the page for search engine results. -->
+    <meta name="description" content="Track the latest COVID-19 trends in New York City with our daily updated dashboard. View 7-day averages for new cases, hospitalizations, and deaths. Data sourced directly from NYC Health.">
+    
+    <!-- ADDED: SEO - Specifies the canonical URL to prevent duplicate content issues. -->
+    <link rel="canonical" href="https://covidnyc.blakerayvid.com/">
+    
+    <!-- ADDED: SEO - Identifies the author of the content. -->
+    <meta name="author" content="https://github.com/brayvid">
 
+    <!--
+    ================================================================================
+    OPEN GRAPH (FACEBOOK, LINKEDIN) & TWITTER CARD TAGS: For social media sharing.
+    ================================================================================
+    -->
+    <!-- ADDED: Open Graph -->
+    <meta property="og:title" content="NYC Covid Report | Blake Rayvid">
+    <meta property="og:description" content="Track the latest COVID-19 trends in New York City with our daily updated dashboard, visualizing cases, hospitalizations, and deaths.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://covidnyc.blakerayvid.com/">
+    <!-- NOTE: Create and upload an image (e.g., a screenshot of the chart) for social sharing. Recommended size: 1200x630px. -->
+    <meta property="og:image" content="https://covidnyc.blakerayvid.com/og-image.png">
 
-        html, body {
-            margin: 0px;
-            padding: 0px;
-            background-color: rgb(164, 211, 164);
-        }
-
-        html { /* CHANGED/ADDED */
-            box-sizing: border-box;
-            min-height: 100vh; /* Ensures HTML element can fill viewport height */
-            margin: 0; /* Reset default browser margin */
-            padding: 0; /* Reset default browser padding */
-            }
-
-        #area {
-            width: 20em;
-            margin-left: auto;
-            margin-right: auto;
-            position: relative
-        }
-
-        #box{
-            width: 100%;       
-            top: 50%;                       
-        }
-
-        #tbl{
-            margin-left: auto;
-            margin-right: auto;
-            text-align: left;
-        }
-
-        #header, #footer, #range, #notice {
-            text-align: center;
-        }
-
-        #range, footer, #notice {
-            font-size: large;
-            font-weight: 500;
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-        }
-        #header, #tbl {
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-            font-size: x-large;
-        } 
-        table th, table td {
-            padding: 5px;
-        }
-
-        footer {
-            color: #000000;
-        }
-
-        a:link {
-            color: black;
-        }
-
-        footer {
-            /* REMOVE position:absolute; and bottom: styles if they were present */
-            margin-top: auto;         /* KEY: Pushes footer to the bottom of available space in body */
-            flex-shrink: 0;           /* ADDED: Prevents footer from shrinking */
-            padding: 10px 20px;
-            text-align: center;
-            width: 100%;
-            /* box-sizing: border-box; /* Already inherited */
-            text-align: center;
-            font-size: 0.9em;
-            color: #666;
-            padding: 2em 0;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 800px;
-            margin: 0 auto;
-            padding-top: 4px;
-            /* Remove padding from here */
-        }
-
-    </style>
-    <!-- JQuery JS 3.5.1 -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
-        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-
-    <!-- Google tag (gtag.js) -->
+    <!-- ADDED: Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="NYC Covid Report | Blake Rayvid">
+    <meta name="twitter:description" content="Track the latest COVID-19 trends in New York City with our daily updated dashboard, visualizing cases, hospitalizations, and deaths.">
+    <!-- NOTE: Ensure this image is optimized for the web. -->
+    <meta name="twitter:image" content="https://covidnyc.blakerayvid.com/og-image.png">
+    
+    <!--
+    ================================================================================
+    PERFORMANCE: Stylesheets and Pre-loading.
+    ================================================================================
+    -->
+    <!-- MOVED: CSS is moved to an external file to prevent render-blocking and enable browser caching. -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- ADDED: Preconnect to CDNs to speed up resource fetching. -->
+    <link rel="preconnect" href="https://code.jquery.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    
+    <!--
+    ================================================================================
+    ANALYTICS & SCRIPTS (in Head)
+    ================================================================================
+    -->
+    <!-- Google tag (gtag.js) - Already async, which is good practice. -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-480YZ7098T"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-480YZ7098T');
     </script>
 </head>
 <body>
 
-    <div id="area">
-        <div id="box">
-            <p id="header">
-                Coronavirus in NYC
-            </p> 
-            <table id="tbl">
-                <tr>
-                  <th>Daily new</th>
-                  <th>#</th>
-                  <!-- <th>Country</th> -->
-                </tr>
-                <tr>
-                  <td>Cases</td>
-                  <td id="cases"></td>
-            
-                </tr>
-                <tr>
-                  <td>Hospitalizations</td>
-                  <td id="hosp"></td>
-                 
-                </tr>
-                <tr>
-                  <td>Deaths</td>
-                  <td id="deaths"></td>
-                  
-                </tr>
-               
-              </table>
+    <!-- ADDED: Semantic <main> tag for main content area for SEO and accessibility. -->
+    <main class="container">
+        <div id="area">
+            <div id="box">
+                <!-- CHANGED: Replaced <p> with <h1> for semantic structure. A page should have one H1. -->
+                <h1 id="header">
+                    Coronavirus in NYC
+                </h1>
+                <table id="tbl">
+                    <caption>Daily new statistics (7-day trailing average)</caption>
+                    <thead>
+                        <tr>
+                          <th scope="col">Metric</th>
+                          <th scope="col">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                          <th scope="row">Cases</th>
+                          <td id="cases"></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Hospitalizations</th>
+                          <td id="hosp"></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Deaths</th>
+                          <td id="deaths"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- REMOVED redundant notice, as it's now in the table caption -->
+            <p id="range"></p>   
+            <div id="canv">
+                <canvas id="myChart" width="400" height="300" role="img" aria-label="A scatter plot showing the 30-day trend of new COVID-19 cases in NYC."></canvas>
+            </div>
         </div>
-        <p id="notice">
-            (7-day trailing average)
-        </p>
-        <p id="range"></p>   
-        <div id="canv">
-            <canvas id="myChart" width="400" height="300"></canvas>
-        </div>
-    </div>
+    </main>
 
-      <footer>
-    <div class="container">
-      <p><a href="https://github.com/nychealth/coronavirus-data/blob/master/latest/now-data-by-day.csv">NYC Health</a> | <a href="https://github.com/brayvid/covidreportnyc">GitHub</a> | <a href="https://blakerayvid.com">Portfolio</a></p>
-    </div>
-  </footer>
-    <script src="index.js"></script>
-    <script>
-        $(document).ready(function () {
-            var res = getDataCSV();
-            // console.log(res);
-        });  
-    </script>
+    <footer>
+        <div class="container">
+            <p><a href="https://github.com/nychealth/coronavirus-data/blob/master/latest/now-data-by-day.csv" rel="noopener noreferrer" target="_blank">NYC Health</a> | <a href="https://github.com/brayvid/covid-report" rel="noopener noreferrer" target="_blank">GitHub</a> | <a href="https://blakerayvid.com" rel="noopener noreferrer" target="_blank">Portfolio</a></p>
+        </div>
+    </footer>
+
+    <!--
+    ================================================================================
+    SCRIPTS (at end of Body for Performance)
+    ================================================================================
+    -->
+    <!-- JQuery JS 3.5.1 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+    <!-- Chart.js - ADDED integrity and crossorigin for security. -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0" 
+        integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+
+    <!-- ADDED: defer attribute to your local script to ensure it runs after the DOM is ready without blocking parsing. -->
+    <script src="index.js" defer></script>
 </body> 
 </html>
