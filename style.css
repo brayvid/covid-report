@@ -1,0 +1,292 @@
+/* ------------------------- */
+/* --- Global & Resets --- */
+/* ------------------------- */
+:root {
+    /* Color Palette */
+    --bg-light: #f0f2f5;           /* Light background grey */
+    --card-bg: #ffffff;            /* White card background */
+    --text-dark: #2c3e50;          /* Dark charcoal for primary text */
+    --text-medium: #7f8c8d;        /* Medium grey for secondary text */
+    --text-light: #ecf0f1;         /* Light grey for inverse text */
+    --accent-blue: #3498db;        /* Professional blue accent */
+    --accent-blue-light: #bee6fb;  /* Lighter blue for subtle highlights */
+    --border-color: #e0e0e0;       /* Light border */
+    --shadow-light: rgba(0, 0, 0, 0.08); /* Subtle shadow */
+
+    /* Typography */
+    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-primary);
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensures footer sticks to bottom */
+}
+
+/* Universal Container for Content Width */
+.container {
+    width: 90%;
+    max-width: 1200px; /* Slightly wider max-width for more content space */
+    margin: 0 auto;
+}
+
+/* ------------------------- */
+/* --- Header & Footer --- */
+/* ------------------------- */
+.dashboard-header {
+    background-color: var(--card-bg); /* Match card background for cohesive look */
+    padding: 2rem 0;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 4px var(--shadow-light);
+    margin-bottom: 2rem; /* Space between header and main content */
+}
+
+.dashboard-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+}
+
+.dashboard-header .header-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-medium);
+}
+
+.dashboard-footer {
+    margin-top: auto; /* Pushes footer to the bottom */
+    padding: 2rem 0;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-medium);
+    border-top: 1px solid var(--border-color);
+    background-color: var(--card-bg); /* Match header/card background */
+}
+
+.dashboard-footer a {
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.dashboard-footer a:hover {
+    text-decoration: underline;
+}
+
+/* ------------------------- */
+/* --- Dashboard Layout --- */
+/* ------------------------- */
+.dashboard-main {
+    flex-grow: 1; /* Allows main content to fill available space */
+    padding-bottom: 2rem; /* Space before footer */
+}
+
+.dashboard-grid {
+    display: grid;
+    gap: 1.5rem; /* Gap between cards */
+    grid-template-columns: 1fr 2fr; /* Metrics on left (1 part), Chart on right (2 parts) */
+    grid-template-areas: "metrics chart"; /* Named areas for readability */
+}
+
+/* Card Styles */
+.dashboard-card {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 10px var(--shadow-light);
+    padding: 1.75rem; /* Consistent padding inside cards */
+}
+
+.dashboard-card h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+/* Status Messages (Loading/Error) */
+.status-message {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    font-size: 1.1rem;
+    color: var(--text-medium);
+}
+
+.status-message.error-message {
+    color: #e74c3c; /* Red for errors */
+}
+
+.status-message small {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.9em;
+    color: var(--text-medium);
+}
+
+/* Spinner for Loading State */
+.spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top-color: var(--accent-blue);
+    animation: spin 1s ease-in-out infinite;
+    vertical-align: middle;
+    margin-left: 8px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ------------------------- */
+/* --- Metrics Card (Left) --- */
+/* ------------------------- */
+.metrics-card {
+    grid-area: metrics; /* Assign to the 'metrics' grid area */
+}
+
+.metrics-card .data-date {
+    font-size: 0.95rem;
+    color: var(--text-medium);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.metrics-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.metrics-table th, .metrics-table td {
+    padding: 1.2rem 0; /* More padding for larger rows */
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.metrics-table tr:last-child th,
+.metrics-table tr:last-child td {
+    border-bottom: none; /* No border for the last row */
+}
+
+.metrics-table th {
+    font-weight: 600; /* Slightly bolder labels */
+    color: var(--text-dark);
+}
+
+.metrics-table td {
+    text-align: right;
+    font-size: 2rem; /* Significantly larger numbers */
+    font-weight: 700;
+    color: var(--accent-blue); /* Blue for values */
+    white-space: nowrap; /* Prevent numbers from wrapping */
+}
+
+/* ------------------------- */
+/* --- Chart Card (Right) --- */
+/* ------------------------- */
+.chart-card {
+    grid-area: chart; /* Assign to the 'chart' grid area */
+}
+
+.chart-container {
+    position: relative;
+    height: 400px; /* Fixed height for consistency, can be adjusted */
+    width: 100%; /* Ensure it takes full width of its parent */
+}
+
+/* ------------------------- */
+/* --- Responsive Design --- */
+/* ------------------------- */
+@media (max-width: 992px) { /* Adjust breakpoint for tablet/smaller desktops */
+    .dashboard-grid {
+        /* Stack columns on smaller screens */
+        grid-template-columns: 1fr; /* Single column */
+        grid-template-areas:
+            "metrics"
+            "chart";
+    }
+
+    .dashboard-header h1 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 600px) { /* Target typical smartphone portrait mode */
+    .dashboard-header {
+        padding: 1.2rem 0; /* Slightly reduce header padding */
+        margin-bottom: 1rem; /* Reduce space after header */
+    }
+
+    .dashboard-header h1 {
+        font-size: 1.6rem; /* Slightly smaller header font */
+    }
+
+    .dashboard-header .header-subtitle {
+        font-size: 0.9rem; /* Slightly smaller subtitle font */
+    }
+
+    .dashboard-main {
+        padding-bottom: 1rem; /* Reduce space before footer */
+    }
+
+    .dashboard-grid {
+        gap: 1rem; /* Reduce gap between cards */
+    }
+
+    .dashboard-card {
+        padding: 1rem; /* More compact card padding */
+    }
+
+    .dashboard-card h2 {
+        font-size: 1.2rem; /* Smaller card title */
+        margin-bottom: 0.8rem;
+    }
+
+    /* Metrics Card adjustments for mobile */
+    .metrics-card .data-date {
+        font-size: 0.85rem; /* Smaller date font */
+        margin-bottom: 1rem; /* More compact date spacing */
+    }
+
+    .metrics-table th, .metrics-table td {
+        padding: 0.8rem 0; /* More compact table row padding */
+    }
+
+    .metrics-table td {
+        font-size: 1.5rem; /* Further reduce metric value size */
+    }
+
+    /* Chart Card adjustments for mobile */
+    .chart-container {
+        height: 250px; /* **KEY CHANGE: Significantly reduce chart height on mobile** */
+    }
+}
+
+@media (max-width: 400px) { /* Optional: For very small/narrow smartphone screens */
+    .dashboard-header h1 {
+        font-size: 1.5rem;
+    }
+    .metrics-table td {
+        font-size: 1.3rem; /* Smallest metric font for tightest fit */
+    }
+    .chart-container {
+        height: 220px; /* Even smaller chart for very narrow screens */
+    }
+}
