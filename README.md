@@ -78,3 +78,7 @@ To run this project locally:
 3.  **Open `index.html`** in your web browser.
 
 No special server setup or build process is required, as all functionality is handled by the browser.
+
+----
+
+<p align="center">&copy; Copyright 2026 <a href="https://blakerayvid.com">Blake Rayvid</a>. All rights reserved.</p>
